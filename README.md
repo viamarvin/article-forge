@@ -1,6 +1,6 @@
-# ArticleForgeAPI
+# ArticleForge API
 
-PHP Library for working with ArticleForge API.
+PHP Library for ArticleForge API.
 
 Support API
   - check_usage
@@ -155,6 +155,20 @@ $article = $af->getApiArticleResult(1234);
 // $article = 'Your Article Spintax'
 ```
 
+### Get Last Error
+In the case of methods of error returned FALSE, the error text can be found referring to the method getLastError. Return error message.
+
+```php
+$af = new viamarvin\ArticleForge\ArticleForge($apiKey);
+$progress = $af->getApiProgress();
+
+if (!$progress) {
+  print $af->getLastError();
+}
+
+// Example output
+// Parameter "ref_key" is required
+```
 
 ### Todos
  - Write Tests
