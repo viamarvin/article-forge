@@ -103,8 +103,7 @@ length | the length of the article. It can be either ‘very_short’(approximat
 title | It can be either 0 or 1. If it is set to be 0, the article generated is without titles and headings. The default value is 0.
 image | the probability of adding an image into the article. It should be a float number from 0.00 to 1.00. The default value is 0.00.
 video | the probability of adding a video into the article. It should be a float number from 0.00 to 1.00. The default value is 0.00.
-auto_links | replace specific keyword within the article with a designated link. You can choose whetherto replace just the first occurrence orall of them. The data structure should be an array following this pattern: [keyword1, url1, all_occurrence?, keyword2, url2, all_occurrence?,...] An example scenario would be:
-Replace ‘keyword1’ with ‘www.keyword1.com’ (Only first occurrence), Replace keyword2 with ‘www.keyword2.com’ (All occurrences)
+auto_links | replace specific keyword within the article with a designated link. You can choose whetherto replace just the first occurrence orall of them. The data structure should be an array following this pattern: [keyword1, url1, all_occurrence?, keyword2, url2, all_occurrence?,...] An example scenario would be: Replace ‘keyword1’ with ‘www.keyword1.com’ (Only first occurrence), Replace keyword2 with ‘www.keyword2.com’ (All occurrences)
 auto_links shouldbeasfollows: ["keyword1","www.keyword1.com", false, "keyword2", "www.keyword2.com",true]
 
 The following parameters are only available when your account is linked to valid WordAi API key. You can go to this URL (https://af.articleforge.com/users/edit) to update your WordAi API key. Overwrite any of these parameters without a valid WordAi API key linked to your account willget anerror.
