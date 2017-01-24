@@ -167,6 +167,3 @@ if (!$progress) {
 // Example output
 // Parameter "ref_key" is required
 ```
-
-### Todos
- - Write Tests

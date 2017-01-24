@@ -1,0 +1,12 @@
+{
+    "name": "viamarvin/ArticleForge/ArticleForge",
+    "require-dev": {
+        "phpunit/phpunit": "5.7.*"
+    },
+    "authors": [
+        {
+            "name": "Sergey Podrezov",
+            "email": "sergey.podrezov@gmail.com"
+        }
+    ]
+}
