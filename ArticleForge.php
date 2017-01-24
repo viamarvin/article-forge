@@ -4,13 +4,16 @@ namespace viamarvin\ArticleForge;
 
 class ArticleForge 
 {
+    // API Url
+    const API_URL = 'https://af.articleforge.com/api';
+
 	// API key
 	private $key = '';
 
 	// String error
 	private $error_message = '';
 
-	public __construct($key = '') {
+	public function __construct($key = '') {
 		$this->setApiKey($key);
 	}
 
@@ -134,7 +137,7 @@ class ArticleForge
 			return false;
 		}
 		
-		$result = $this->execute('view_articles', ['article_id' => $artcile_id]);
+		$result = $this->execute('view_articles', ['article_id' => $article_id]);
 		if ($this->isStatusSuccess($result)) {
 			return isset($result['data']) ? $result['data'] : '';
 		}
@@ -160,7 +163,7 @@ class ArticleForge
 			return false;
 		}
 		
-		$result = $this->execute('view_spin', ['article_id' => $artcile_id]);
+		$result = $this->execute('view_spin', ['article_id' => $article_id]);
 		if ($this->isStatusSuccess($result)) {
 			return isset($result['data']) ? $result['data'] : '';
 		}
@@ -387,14 +390,18 @@ class ArticleForge
      */
 	private function execute($method, $params = []) {
 		$params['key'] = $this->getApiKey();
+        if (empty($params['key'])) {
+            $this->setErrorMessage('API key is required');
+            return false;
+        }
 
-		$ch = curl_init($this->apiUrl . '/' . $method);
+		$ch = curl_init(self::API_URL . '/' . $method);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, implode('&', $params));
 
 		$result = curl_exec($ch);
-		$curl_close($ch);
+		curl_close($ch);
 
 		return json_decode($result, true);
 	}
