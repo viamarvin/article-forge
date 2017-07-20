@@ -5,7 +5,7 @@ namespace viamarvin\ArticleForge;
 class ArticleForge 
 {
     // API Url
-    const API_URL = 'https://af.articleforge.com/api';
+    private $apiUrl = 'https://af.articleforge.com/api';
 
 	// API key
 	private $key = '';
@@ -298,8 +298,8 @@ class ArticleForge
      * @return int the percentage of completion, range 0-100
      */
 	public function getApiProgress($ref_key) {
-		$ref_key = (int) $ref_key;
-		if ($ref_key == 0) {
+		$ref_key = trim($ref_key);
+		if ($ref_key == '') {
 			$this->setErrorMessage('Parameter "ref_key" is required');
 			return false;
 		}
@@ -318,7 +318,7 @@ class ArticleForge
 					$progress = 100; 	
 					break;
 				default:
-					$progress = isset($result['progress']) ? floatval($result['progress']) * 100 : 0;
+                    $progress = isset($result['progress']) ? round(floatval($result['progress']) * 100) : 0;
 			}
 			
 			return $progress;
@@ -339,8 +339,8 @@ class ArticleForge
      * @return string article text
      */
 	public function getApiArticleResult($ref_key) {
-		$ref_key = (int) $ref_key;
-		if ($ref_key == 0) {
+		$ref_key = trim($ref_key);
+		if ($ref_key == '') {
 			$this->setErrorMessage('Parameter "ref_key" is required');
 			return false;
 		}
@@ -395,14 +395,20 @@ class ArticleForge
             return false;
         }
 
-		$ch = curl_init(self::API_URL . '/' . $method);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, implode('&', $params));
+        foreach ($params AS $key => $val) {
+            $params[$key] = $key . '=' . $val;
+        }
 
-		$result = curl_exec($ch);
-		curl_close($ch);
+        $params = implode('&', $params);
 
-		return json_decode($result, true);
+        $ch = curl_init($this->apiUrl . '/' . $method);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        return json_decode($result, true);
 	}
 }
